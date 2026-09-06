@@ -40,12 +40,12 @@ library TimeDecay {
     }
 
     /// @notice Discounted market value of `faceValue` given time left and horizon.
-    function discountedValue(uint256 faceValue, uint256 secondsToExpiry, uint256 horizonSeconds)
+    function discountedValue(uint256 faceValue, uint256 secsToExpiry, uint256 horizonSeconds)
         internal
         pure
         returns (uint256)
     {
-        return (faceValue * factorBips(secondsToExpiry, horizonSeconds)) / BIPS;
+        return (faceValue * factorBips(secsToExpiry, horizonSeconds)) / BIPS;
     }
 
     /// @notice Seconds left before `expiry` at time `nowTs`; 0 once expired.
