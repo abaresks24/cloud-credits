@@ -42,12 +42,26 @@ export const ens = {
   permissionedResolverImpl: "0x9eae5c2730a7dd16bdd1dee6421a1b91e3b0365e",
   ensV2Resolver: "0x508cb4e4596429ca98a1bb3112d88d18f92456b5",
   ethRegistrar: "0xa88553f454b77203b0d036a05c894d555eaaa2cc",
+  rentPriceOracle: "0x8914b66260EB8C4fff795650c3AE8Cd335958987",
+  // Registration is paid in an approved ERC-20 (not ETH). MockUSDC is freely mintable (mint(addr,amt))
+  // and accepted (oracle.isPaymentToken == true) — verified on-chain 2026-09-06.
+  mockUSDC: "0x768f42455a2d082e23ceef7d51e5787c82d67a39",
+  mockDAI: "0x5472c5725a00b7ba11f0794a79d08ade6f4683bd",
+  circleUSDC: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238", // also accepted, but faucet-gated
 } as const;
 
-/** Our own deployments — filled after broadcast (CommitmentToken, TimeDecayHook, EnsSellerRegistry, …). */
+/**
+ * Ours — registered / deployed by us.
+ * cloudcredits.eth registered 2026-09-06 via the ENSv2 beta ETHRegistrar (commit-reveal, paid 8 MockUSDC),
+ * owner = dev wallet, resolver = PublicResolverV2. Verified: ethRegistry.getResolver("cloudcredits")
+ * returns PublicResolverV2, so the name resolves (J1 checkpoint met).
+ */
 export const ours = {
+  ensName: "cloudcredits.eth",
+  ensNode: "0xfc47d1666a0b864f859c0b1b22510ec26cd8f97786426433b8031f31ef03c78b", // namehash
+  ensLabelhash: "0x40ee1890d2500975ef98e231d136d8ac83475c31ea7cee7bffb993c424d82b0b",
   commitmentToken: "0x",
   timeDecayHook: "0x",
   ensSellerRegistry: "0x",
-  usdcTest: "0x",
+  usdcTest: "0x768f42455a2d082e23ceef7d51e5787c82d67a39", // reuse MockUSDC as the pool's test USDC (mintable)
 } as const;
