@@ -76,7 +76,8 @@ contract TimeDecayHook is BaseTestHooks, IUnlockCallback {
         IEligibility _eligibility,
         CommitmentToken _token,
         Currency _usdc,
-        uint256 _horizon
+        uint256 _horizon,
+        address _owner
     ) {
         manager = _manager;
         eligibility = _eligibility;
@@ -84,7 +85,7 @@ contract TimeDecayHook is BaseTestHooks, IUnlockCallback {
         tokenCurrency = Currency.wrap(address(_token));
         usdcCurrency = _usdc;
         horizon = _horizon;
-        owner = msg.sender;
+        owner = _owner; // set explicitly: deploying via CREATE2 makes msg.sender the proxy
     }
 
     function setRouter(address router, bool allowed) external onlyOwner {

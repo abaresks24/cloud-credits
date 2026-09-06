@@ -60,8 +60,13 @@ export const ours = {
   ensName: "cloudcredits.eth",
   ensNode: "0xfc47d1666a0b864f859c0b1b22510ec26cd8f97786426433b8031f31ef03c78b", // namehash
   ensLabelhash: "0x40ee1890d2500975ef98e231d136d8ac83475c31ea7cee7bffb993c424d82b0b",
-  commitmentToken: "0x",
-  timeDecayHook: "0x",
-  ensSellerRegistry: "0x",
-  usdcTest: "0x768f42455a2d082e23ceef7d51e5787c82d67a39", // reuse MockUSDC as the pool's test USDC (mintable)
+  usdcTest: "0x768f42455a2d082e23ceef7d51e5787c82d67a39", // MockUSDC reused as the pool's test USDC (mintable)
+
+  // Deployed on Sepolia 2026-09-06 (script/Deploy.s.sol) — conformant buy verified on-chain.
+  commitmentToken: "0x607840F8fC994228F407dAeDe17ce52f0f85C770", // $100k AWS, 24-month expiry
+  commitmentResolver: "0x0286F6e5939b58Bf895C75826d4286Bf94731Fa4",
+  ensSellerRegistry: "0x94E8D7225D39FCc31Dc41bdD840D047f74317060",
+  ensEligibilityAdapter: "0x97e0c5DF3E110bD57961396E53Eba638D7cbACcA",
+  timeDecayHook: "0x336491F60Cb6aF7061d7112f2475067821238888", // low bits 0x888 = swap+returnsDelta+addLiq flags
+  commitmentRouter: "0xF20af8371B4dBa71562399607d18bb05FAB8A682",
 } as const;
