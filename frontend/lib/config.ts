@@ -24,8 +24,11 @@ export const pool = {
   tokenIsCurrency0: addr.token.toLowerCase() < addr.usdc.toLowerCase(),
 } as const;
 
+/** World ID 4.0 (Selfie Check via Relying Party). app_id + rp_id are public; the signing key is not.
+ *  Verify endpoint: https://developer.world.org/api/v4/verify/{rp_id}. */
 export const world = {
-  appId: (process.env.NEXT_PUBLIC_WORLD_APP_ID ?? "") as string,
+  appId: (process.env.NEXT_PUBLIC_WORLD_APP_ID ?? "app_d70a6166fdce8cfa69c435368cd2d090") as `app_${string}`,
+  rpId: process.env.NEXT_PUBLIC_WORLD_RP_ID ?? "rp_e9119ca69759b413",
   action: process.env.NEXT_PUBLIC_WORLD_ACTION ?? "sell-commitment",
 };
 
