@@ -2,38 +2,31 @@
 
 import { useState } from "react";
 import { ConnectButton } from "@/components/ConnectButton";
+import { Home } from "@/components/Home";
 import { Market } from "@/components/Market";
 import { Onboard } from "@/components/Onboard";
 import { Desk } from "@/components/Desk";
 
-type Tab = "market" | "sell" | "desk";
+type Tab = "home" | "market" | "sell" | "desk";
 
-export default function Home() {
-  const [tab, setTab] = useState<Tab>("market");
+export default function Page() {
+  const [tab, setTab] = useState<Tab>("home");
   return (
     <div className="wrap">
       <nav className="nav">
-        <div className="brand"><span className="logo" /> Cloud Credits</div>
+        <button className="brand" style={{ border: "none", background: "none", cursor: "pointer" }} onClick={() => setTab("home")}>
+          <span className="logo">C</span> Cloud Credits
+        </button>
         <div className="tabs">
+          <button className={`tab ${tab === "home" ? "active" : ""}`} onClick={() => setTab("home")}>Home</button>
           <button className={`tab ${tab === "market" ? "active" : ""}`} onClick={() => setTab("market")}>Market</button>
-          <button className={`tab ${tab === "sell" ? "active" : ""}`} onClick={() => setTab("sell")}>Sell / Onboard</button>
+          <button className={`tab ${tab === "sell" ? "active" : ""}`} onClick={() => setTab("sell")}>Sell</button>
           <button className={`tab ${tab === "desk" ? "active" : ""}`} onClick={() => setTab("desk")}>Desk</button>
         </div>
         <ConnectButton />
       </nav>
 
-      {tab === "market" && (
-        <header className="hero">
-          <span className="eyebrow">◆ Uniswap v4 · ENSv2 · World</span>
-          <h1>Resell unused cloud commitments, priced by <span className="g">time to maturity</span>.</h1>
-          <p>
-            ~29% of cloud spend is wasted and fewer than half of orgs fully use their commitment
-            discounts (Flexera). Buy that unused capacity at a discount that widens as expiry
-            approaches — the price decays mechanically, enforced by a Uniswap v4 hook.
-          </p>
-        </header>
-      )}
-
+      {tab === "home" && <Home onEnter={() => setTab("market")} />}
       {tab === "market" && <Market />}
       {tab === "sell" && (
         <>

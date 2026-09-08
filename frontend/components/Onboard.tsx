@@ -55,7 +55,7 @@ export function Onboard() {
 
         <div className="row"><span className="k">Wallet</span><span className="v mono">{isConnected ? `${address!.slice(0, 6)}…${address!.slice(-4)}` : "connect wallet"}</span></div>
         <div className="row"><span className="k">Verification</span><span className="v">
-          {state.ok ? <span className="pill ok"><span className="dot" />verified</span> : state.ok === false ? <span className="pill bad"><span className="dot" />failed</span> : "—"}
+          {state.ok ? <span className="state ok">Verified</span> : state.ok === false ? <span className="state bad">Failed</span> : "—"}
         </span></div>
 
         <div style={{ marginTop: 14 }}>

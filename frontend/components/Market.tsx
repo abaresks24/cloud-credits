@@ -90,7 +90,7 @@ export function Market() {
         <div className="card" style={{ position: "sticky", top: 84 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
             <h2>Buy</h2>
-            {isConnected && (eligible ? <span className="pill ok"><span className="dot" />verified</span> : <span className="pill bad"><span className="dot" />not verified</span>)}
+            {isConnected && <span className={`state ${eligible ? "ok" : "bad"}`}>{eligible ? "Verified" : "Not verified"}</span>}
           </div>
           <div className="sub">Verified buyers only — eligibility is read live from ENS.</div>
 
@@ -105,7 +105,7 @@ export function Market() {
             <div className="top"><span>You receive (est.)</span><span className="mono">Balance {f6(acme as bigint)}</span></div>
             <div className="mid">
               <span className="est">≈ {est}</span>
-              <span className="chip-token"><span className="coin" style={{ background: "var(--accent-2)" }}>◆</span>ccAWS</span>
+              <span className="chip-token"><span className="coin" style={{ background: "var(--accent)" }}>A</span>ccAWS</span>
             </div>
           </div>
 

@@ -74,7 +74,7 @@ export function Desk() {
         {targetOk && (
           <>
             <div className="row"><span className="k">Status</span><span className="v">{bound ? (status as string) || "—" : "unregistered"}</span></div>
-            <div className="row"><span className="k">Eligible</span><span className="v">{eligible ? <span className="pill ok"><span className="dot" />yes</span> : <span className="pill bad"><span className="dot" />no</span>}</span></div>
+            <div className="row"><span className="k">Eligible</span><span className="v">{eligible ? <span className="state ok">Yes</span> : <span className="state bad">No</span>}</span></div>
             <div style={{ display: "flex", gap: 8, marginTop: 14 }}>
               <button className="btn danger" onClick={() => setStatus("revoked")} disabled={!!busy}>Revoke</button>
               <button className="btn ghost" onClick={() => setStatus("active")} disabled={!!busy}>Reactivate</button>
