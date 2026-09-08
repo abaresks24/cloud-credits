@@ -38,7 +38,7 @@ export default function Home() {
       {tab === "desk" && <Desk />}
 
       <footer className="foot">
-        Sepolia testnet · hook <a className="mono" href="https://sepolia.etherscan.io/address/0x336491F60Cb6aF7061d7112f2475067821238888" target="_blank" rel="noreferrer">0x3364…8888</a>
+        Sepolia testnet · hook <a className="mono" href="https://sepolia.etherscan.io/address/0xB5E5daeE51a2cbd5db6Fc021db0A091cac928888" target="_blank" rel="noreferrer">0xB5E5…8888</a>
         {" · "}<a href="https://github.com/abaresks24/cloud-credits" target="_blank" rel="noreferrer">GitHub</a>
         {" · "}Demo asset, not a real security. Cloud contracts restrict transfer — real deployment needs provider consent.
       </footer>

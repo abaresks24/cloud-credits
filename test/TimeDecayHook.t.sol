@@ -71,7 +71,7 @@ contract TimeDecayHookTest is Test, Deployers {
         Currency usdcCur = Currency.wrap(address(usdc));
         deployCodeTo(
             "TimeDecayHook.sol:TimeDecayHook",
-            abi.encode(IPoolManager(address(manager)), IEligibility(address(elig)), token, usdcCur, HORIZON, address(this)),
+            abi.encode(IPoolManager(address(manager)), IEligibility(address(elig)), token, usdcCur, HORIZON, address(this), address(0)),
             hookAddr
         );
         hook = TimeDecayHook(hookAddr);

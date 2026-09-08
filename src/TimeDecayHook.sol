@@ -15,6 +15,7 @@ import {IUnlockCallback} from "v4-core/src/interfaces/callback/IUnlockCallback.s
 import {IEligibility} from "./IEligibility.sol";
 import {CommitmentToken} from "./CommitmentToken.sol";
 import {TimeDecay} from "./TimeDecay.sol";
+import {SellerBond} from "./SellerBond.sol";
 
 /**
  * @title TimeDecayHook
@@ -46,6 +47,7 @@ contract TimeDecayHook is BaseTestHooks, IUnlockCallback {
     Currency public immutable tokenCurrency;
     Currency public immutable usdcCurrency;
     uint256 public immutable horizon; // seconds of runway for full value
+    SellerBond public immutable bond; // optional (address(0) disables): sellers must be bonded to list
 
     address public owner;
     mapping(address => bool) public allowedRouter;
@@ -54,6 +56,7 @@ contract TimeDecayHook is BaseTestHooks, IUnlockCallback {
     error NotOwner();
     error UnauthorizedRouter(address sender);
     error NotEligible(address user);
+    error NotBonded(address seller);
     error TradingClosed(); // decayed to zero (expired)
     error ExactOutputNotSupported();
     error LiquidityViaHookOnly();
@@ -77,7 +80,8 @@ contract TimeDecayHook is BaseTestHooks, IUnlockCallback {
         CommitmentToken _token,
         Currency _usdc,
         uint256 _horizon,
-        address _owner
+        address _owner,
+        address _bond
     ) {
         manager = _manager;
         eligibility = _eligibility;
@@ -86,6 +90,7 @@ contract TimeDecayHook is BaseTestHooks, IUnlockCallback {
         usdcCurrency = _usdc;
         horizon = _horizon;
         owner = _owner; // set explicitly: deploying via CREATE2 makes msg.sender the proxy
+        bond = SellerBond(_bond);
     }
 
     function setRouter(address router, bool allowed) external onlyOwner {
@@ -104,6 +109,8 @@ contract TimeDecayHook is BaseTestHooks, IUnlockCallback {
     ///         approved this hook for both ERC-20s.
     function seedLiquidity(uint256 tokenAmount, uint256 usdcAmount) external {
         if (!eligibility.isEligible(msg.sender)) revert NotEligible(msg.sender);
+        // A seller listing a commitment must be bonded — skin in the game against fraudulent listings.
+        if (address(bond) != address(0) && !bond.hasBond(msg.sender)) revert NotBonded(msg.sender);
         manager.unlock(abi.encode(msg.sender, tokenAmount, usdcAmount));
     }
 

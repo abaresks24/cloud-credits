@@ -16,6 +16,7 @@ import {EnsSellerRegistry} from "../src/EnsSellerRegistry.sol";
 import {EnsEligibilityAdapter} from "../src/EnsEligibilityAdapter.sol";
 import {TimeDecayHook} from "../src/TimeDecayHook.sol";
 import {CommitmentRouter} from "../src/CommitmentRouter.sol";
+import {SellerBond} from "../src/SellerBond.sol";
 
 interface IMintableUSDC {
     function mint(address to, uint256 amount) external;
@@ -57,14 +58,17 @@ contract Deploy is Script {
         resolver.onboard(NODE, "aws", "attested", expiry); // cloudcredits.eth -> active
         adapter.bind(me, NODE); // the deployer trades as cloudcredits.eth
 
-        // 3) mine + deploy the hook at an address carrying its permission flags
+        // 3) seller bond (trust-minimization): officer = deployer, compensation pool = deployer
+        SellerBond bond = new SellerBond(MOCK_USDC, 50_000e6, 1 days, me, me);
+
+        // 4) mine + deploy the hook at an address carrying its permission flags
         uint160 flags =
             uint160(Hooks.BEFORE_SWAP_FLAG | Hooks.BEFORE_SWAP_RETURNS_DELTA_FLAG | Hooks.BEFORE_ADD_LIQUIDITY_FLAG);
         Currency usdcCurrency = Currency.wrap(MOCK_USDC);
-        bytes memory args = abi.encode(MANAGER, adapter, token, usdcCurrency, HORIZON, me);
+        bytes memory args = abi.encode(MANAGER, adapter, token, usdcCurrency, HORIZON, me, address(bond));
         (address hookAddr, bytes32 salt) =
             HookMiner.find(CREATE2_DEPLOYER, flags, type(TimeDecayHook).creationCode, args);
-        TimeDecayHook hook = new TimeDecayHook{salt: salt}(MANAGER, adapter, token, usdcCurrency, HORIZON, me);
+        TimeDecayHook hook = new TimeDecayHook{salt: salt}(MANAGER, adapter, token, usdcCurrency, HORIZON, me, address(bond));
         require(address(hook) == hookAddr, "hook address mismatch");
 
         // 4) the venue router (forwards the real user; RISK #1)
@@ -79,8 +83,10 @@ contract Deploy is Script {
             PoolKey({currency0: c0, currency1: c1, fee: 3000, tickSpacing: 60, hooks: IHooks(hookAddr)});
         MANAGER.initialize(key, SQRT_PRICE_1_1);
 
-        // 6) seed the hook's reserves (eligible LP = deployer)
+        // 6) post the seller bond, then seed the hook's reserves (eligible + bonded LP = deployer)
         IMintableUSDC(MOCK_USDC).mint(me, 300_000e6);
+        IMintableUSDC(MOCK_USDC).approve(address(bond), type(uint256).max);
+        bond.deposit(50_000e6); // skin in the game before listing
         token.approve(address(hook), type(uint256).max);
         IMintableUSDC(MOCK_USDC).approve(address(hook), type(uint256).max);
         hook.seedLiquidity(50_000e6, 200_000e6);
@@ -106,6 +112,7 @@ contract Deploy is Script {
         console2.log("CommitmentResolver", address(resolver));
         console2.log("EnsSellerRegistry ", address(registry));
         console2.log("EnsEligibilityAdapter", address(adapter));
+        console2.log("SellerBond       ", address(bond));
         console2.log("TimeDecayHook    ", address(hook));
         console2.log("CommitmentRouter ", address(router));
         console2.log("factor bips now  ", hook.currentFactorBips());

@@ -6,12 +6,13 @@ import { injected } from "wagmi/connectors";
 export const addr = {
   poolManager: "0xE03A1074c86CFeDd5C142C4F04F1a1536e203543",
   usdc: "0x768f42455a2d082e23ceef7d51e5787c82d67a39", // MockUSDC (mintable, 6dp)
-  token: "0x607840F8fC994228F407dAeDe17ce52f0f85C770", // CommitmentToken ccAWS
-  resolver: "0x0286F6e5939b58Bf895C75826d4286Bf94731Fa4",
-  registry: "0x94E8D7225D39FCc31Dc41bdD840D047f74317060",
-  adapter: "0x97e0c5DF3E110bD57961396E53Eba638D7cbACcA",
-  hook: "0x336491F60Cb6aF7061d7112f2475067821238888",
-  router: "0xF20af8371B4dBa71562399607d18bb05FAB8A682",
+  token: "0x4e9698256dC1654876086374B2B2655D97941280", // CommitmentToken ccAWS
+  resolver: "0xD682c2f8C498A3B08C52E7c27891284Ab7A79dAe",
+  registry: "0x05E00f06019DE4964314B6Ff727a098341c0f17a",
+  adapter: "0x4B909eE2C0c919D18b284177EE2830457E14818A",
+  bond: "0x9a880f885445bAF769E98D57Dda814E3d6aADef4",
+  hook: "0xB5E5daeE51a2cbd5db6Fc021db0A091cac928888",
+  router: "0xc0363da931c198fab1533F2B1486d794A5931B6c",
 } as const;
 
 /** cloudcredits.eth node (the demo seller identity). */

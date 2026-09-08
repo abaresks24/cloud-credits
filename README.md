@@ -43,6 +43,7 @@ time to expiry — which is what makes the hook *necessary*, not decorative.
 | **`EnsSellerRegistry`** | Reads `commitment.status` from ENS; eligibility = active | **Ours** |
 | **`CommitmentResolver`** | ENSIP text resolver + EAC roles (issuer / verifier) | **Ours** |
 | **`EnsEligibilityAdapter`** | address → ENS node → eligibility (the hook's oracle) | **Ours** |
+| **`SellerBond`** | Seller collateral, slashable on fraud → compensation pool | **Ours** |
 | World Selfie Check | Human-authorizes-the-sale (anti-fraud) | Integrated (`frontend/`) |
 
 ## What to review (and where)
@@ -65,13 +66,14 @@ time to expiry — which is what makes the hook *necessary*, not decorative.
 ```bash
 git clone --recurse-submodules https://github.com/abaresks24/cloud-credits
 cd cloud-credits
-forge test          # 28 passing across 5 suites
+forge test          # 36 passing across 6 suites
 ```
 
 | Suite | Covers |
 |---|---|
 | `TimeDecayHook.t.sol` (7) | RISK #1 blocking test, custom-curve buy, decay, unauthorized router, expired |
-| `DemoScenarios.t.sol` (4) | SPEC §6 steps 4-8 end-to-end with real ENS eligibility + EAC revocation |
+| `DemoScenarios.t.sol` (6) | SPEC §6 steps 4-8 end-to-end with real ENS eligibility + EAC revocation + bond |
+| `SellerBond.t.sol` (6) | Deposit/min, cooldown withdraw, slash-only-arbiter → compensation pool |
 | `TimeDecay.t.sol` (7) | Decay math incl. fuzz monotonicity |
 | `EnsSellerRegistry.t.sol` (6) | Reads `commitment.status`, revocation, fail-closed |
 | `EnsEligibilityAdapter.t.sol` (4) | address → node → status bridge |
@@ -96,6 +98,22 @@ registered via the ENSv2 beta ETHRegistrar.
   decision attributes live in ENS.
 - **"Is ENSv2 central?"** Yes — the revocation demo is a single ENS status write by a delegated role
   that changes on-chain trading behavior immediately.
+
+## Trust model & path to trustlessness
+
+This asset is a **real-world claim on AWS**, so you can never be more trustless than the party that
+owes the service — the "last-mile / oracle problem" of RWAs. We don't pretend otherwise; we *reduce*
+trust in layers:
+
+- **Level 0 (identity)** — a desk attests and can revoke via a delegated ENS role. Reputational trust.
+- **Level 1 (collateral) — implemented.** `SellerBond`: a seller must post a bond to list; on fraud the
+  officer slashes it to a compensation pool, so a buyer is made whole on-chain. This replaces
+  reputational trust with an **economic guarantee + automatic remedy**. Honest limit: it still needs a
+  *trigger* (who declares fraud).
+- **Level 2 (proofs) — future.** zkTLS/TLSNotary proofs of the AWS console balance would remove the
+  trusted desk from steps "does it exist / is the value true".
+- **Level 3 (native issuance)** — only AWS issuing transferable credits on-chain removes step "will it
+  be honored" — and even then you trust AWS. That's the irreducible floor.
 
 ## Deliberate scope
 

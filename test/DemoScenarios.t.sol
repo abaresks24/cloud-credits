@@ -17,6 +17,7 @@ import {CommitmentRouter} from "../src/CommitmentRouter.sol";
 import {CommitmentResolver} from "../src/CommitmentResolver.sol";
 import {EnsSellerRegistry} from "../src/EnsSellerRegistry.sol";
 import {EnsEligibilityAdapter} from "../src/EnsEligibilityAdapter.sol";
+import {SellerBond} from "../src/SellerBond.sol";
 
 contract USDCMock is ERC20 {
     constructor() ERC20("USDC", "USDC") {}
@@ -38,6 +39,10 @@ contract DemoScenariosTest is Test, Deployers {
     EnsSellerRegistry registry;
     EnsEligibilityAdapter adapter;
     CommitmentRouter router;
+    SellerBond bond;
+
+    address pool = makeAddr("compensationPool");
+    uint256 constant MIN_BOND = 50_000e6;
 
     address desk = address(this); // issuer / compliance desk
     address officer = makeAddr("officer"); // delegated verifier (EAC role)
@@ -57,6 +62,7 @@ contract DemoScenariosTest is Test, Deployers {
         registry = new EnsSellerRegistry(address(resolver));
         adapter = new EnsEligibilityAdapter(address(registry));
         resolver.setVerifier(officer, true); // delegate the verification role
+        bond = new SellerBond(address(usdc), MIN_BOND, 1 days, officer, pool); // officer is also the arbiter
 
         token = new CommitmentToken(CommitmentToken.Provider.AWS, 100_000, uint64(block.timestamp + 730 days), lp);
 
@@ -66,7 +72,7 @@ contract DemoScenariosTest is Test, Deployers {
         Currency usdcCur = Currency.wrap(address(usdc));
         deployCodeTo(
             "TimeDecayHook.sol:TimeDecayHook",
-            abi.encode(IPoolManager(address(manager)), adapter, token, usdcCur, HORIZON, address(this)),
+            abi.encode(IPoolManager(address(manager)), adapter, token, usdcCur, HORIZON, address(this), address(bond)),
             hookAddr
         );
         hook = TimeDecayHook(hookAddr);
@@ -79,10 +85,12 @@ contract DemoScenariosTest is Test, Deployers {
         key = PoolKey({currency0: c0, currency1: c1, fee: 3000, tickSpacing: 60, hooks: IHooks(hookAddr)});
         manager.initialize(key, SQRT_PRICE_1_1);
 
-        // eligible LP seeds reserves
+        // eligible LP posts a bond, then seeds reserves
         _onboard(keccak256("lp.cloudcredits.eth"), lp);
         usdc.mint(lp, 1_000_000e6);
         vm.startPrank(lp);
+        usdc.approve(address(bond), type(uint256).max);
+        bond.deposit(MIN_BOND); // skin in the game before listing
         token.approve(address(hook), type(uint256).max);
         usdc.approve(address(hook), type(uint256).max);
         hook.seedLiquidity(60_000e6, 400_000e6);
@@ -158,5 +166,31 @@ contract DemoScenariosTest is Test, Deployers {
         vm.expectRevert(); // resale now rejected at the hook
         router.swap(key, _buyParams(1_000e6));
         vm.stopPrank();
+    }
+
+    // Trust-minimization: a seller must be bonded to list — ENS-active alone is not enough.
+    function test_bond_requiredToList() public {
+        address seller2 = makeAddr("seller2");
+        _onboard(keccak256("seller2.cloudcredits.eth"), seller2); // ENS active, but no bond posted
+        assertTrue(adapter.isEligible(seller2), "ENS-eligible");
+        vm.prank(seller2);
+        vm.expectRevert(abi.encodeWithSelector(TimeDecayHook.NotBonded.selector, seller2));
+        hook.seedLiquidity(0, 1_000e6);
+    }
+
+    // Fraud path: the officer slashes the seller's bond to the compensation pool (buyer made whole
+    // on-chain), on top of revoking their ENS status.
+    function test_bond_slashCompensatesOnFraud() public {
+        assertTrue(bond.hasBond(lp));
+        uint256 poolBefore = usdc.balanceOf(pool);
+
+        vm.startPrank(officer);
+        resolver.setStatus(keccak256("lp.cloudcredits.eth"), "revoked"); // revoke identity
+        bond.slash(lp); // and slash the bond
+        vm.stopPrank();
+
+        assertEq(usdc.balanceOf(pool), poolBefore + MIN_BOND, "compensation pool funded by the slash");
+        assertFalse(bond.hasBond(lp), "bond gone");
+        assertFalse(adapter.isEligible(lp), "identity revoked too");
     }
 }
