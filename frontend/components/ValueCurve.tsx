@@ -38,17 +38,21 @@ export function ValueCurve({ faceValue, expiry }: { faceValue: number; expiry: n
       <svg viewBox={`0 0 ${pts.W} ${pts.H}`} width="100%" role="img" aria-label="value over time">
         <defs>
           <linearGradient id="cc" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#5b8cff" stopOpacity="0.35" />
-            <stop offset="100%" stopColor="#5b8cff" stopOpacity="0" />
+            <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.32" />
+            <stop offset="100%" stopColor="#22d3ee" stopOpacity="0" />
+          </linearGradient>
+          <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#4f8cff" />
+            <stop offset="100%" stopColor="#22d3ee" />
           </linearGradient>
         </defs>
         <path d={area} fill="url(#cc)" />
-        <path d={path} fill="none" stroke="#5b8cff" strokeWidth="2.5" />
-        <line x1="0" y1={pts.H - pts.padB} x2={pts.W} y2={pts.H - pts.padB} stroke="#24304f" />
-        <circle cx={nowX} cy={nowY} r="4.5" fill="#8a6cff" />
-        <text x={nowX + 8} y={nowY - 8} fill="#93a0c0" fontSize="11" fontFamily="ui-monospace">now</text>
-        <text x={pts.W - 8} y={pts.H - 6} fill="#93a0c0" fontSize="11" textAnchor="end" fontFamily="ui-monospace">expiry</text>
-        <text x="8" y={pts.H - 6} fill="#93a0c0" fontSize="11" fontFamily="ui-monospace">
+        <path d={path} fill="none" stroke="url(#line)" strokeWidth="2.5" />
+        <line x1="0" y1={pts.H - pts.padB} x2={pts.W} y2={pts.H - pts.padB} stroke="#1d2942" />
+        <circle cx={nowX} cy={nowY} r="4.5" fill="#22d3ee" />
+        <text x={nowX + 8} y={nowY - 8} fill="#8a99b8" fontSize="11" fontFamily="ui-monospace">now</text>
+        <text x={pts.W - 8} y={pts.H - 6} fill="#8a99b8" fontSize="11" textAnchor="end" fontFamily="ui-monospace">expiry</text>
+        <text x="8" y={pts.H - 6} fill="#8a99b8" fontSize="11" fontFamily="ui-monospace">
           {monthsLeft.toFixed(0)} months left
         </text>
       </svg>

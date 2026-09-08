@@ -22,20 +22,31 @@ export default function Home() {
         <ConnectButton />
       </nav>
 
-      <header className="hero">
-        <span className="eyebrow">Uniswap v4 · ENSv2 · World</span>
-        <h1>The secondary market for unconsumed cloud commitments.</h1>
-        <p>
-          Companies over-commit to multi-year cloud spend for the discounts, then leave capacity unused
-          (~29% of cloud spend is wasted, and fewer than half of orgs fully use their commitment
-          discounts — Flexera). Cloud Credits lets them resell it, at a price that decays with the time
-          left to consume the credit — enforced by a Uniswap v4 hook.
-        </p>
-      </header>
+      {tab === "market" && (
+        <header className="hero">
+          <span className="eyebrow">◆ Uniswap v4 · ENSv2 · World</span>
+          <h1>Resell unused cloud commitments, priced by <span className="g">time to maturity</span>.</h1>
+          <p>
+            ~29% of cloud spend is wasted and fewer than half of orgs fully use their commitment
+            discounts (Flexera). Buy that unused capacity at a discount that widens as expiry
+            approaches — the price decays mechanically, enforced by a Uniswap v4 hook.
+          </p>
+        </header>
+      )}
 
       {tab === "market" && <Market />}
-      {tab === "sell" && <Onboard />}
-      {tab === "desk" && <Desk />}
+      {tab === "sell" && (
+        <>
+          <div className="sect"><span className="num">01</span><h2>Sell a commitment</h2></div>
+          <Onboard />
+        </>
+      )}
+      {tab === "desk" && (
+        <>
+          <div className="sect"><span className="num">02</span><h2>Compliance desk</h2></div>
+          <Desk />
+        </>
+      )}
 
       <footer className="foot">
         Sepolia testnet · hook <a className="mono" href="https://sepolia.etherscan.io/address/0xB5E5daeE51a2cbd5db6Fc021db0A091cac928888" target="_blank" rel="noreferrer">0xB5E5…8888</a>
