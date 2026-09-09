@@ -1,12 +1,15 @@
 "use client";
 
+import Link from "next/link";
+import { Footer } from "@/components/Footer";
+
 export function Landing({ onEnter }: { onEnter: () => void }) {
   return (
     <>
       <nav className="nav">
         <div className="brand"><span className="logo">C</span> Cloud Credits</div>
         <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-          <a className="lnav" href="https://github.com/abaresks24/cloud-credits" target="_blank" rel="noreferrer">Code</a>
+          <Link className="lnav" href="/docs">Docs</Link>
           <button className="btn primary" onClick={onEnter}>Launch app</button>
         </div>
       </nav>
@@ -21,7 +24,7 @@ export function Landing({ onEnter }: { onEnter: () => void }) {
         </p>
         <div className="home-cta">
           <button className="btn primary lg" onClick={onEnter}>Launch app</button>
-          <a className="btn lg" href="https://github.com/abaresks24/cloud-credits" target="_blank" rel="noreferrer">View the code</a>
+          <Link className="btn lg" href="/docs">Read the docs</Link>
         </div>
 
         <div className="land-stats">
@@ -44,10 +47,7 @@ export function Landing({ onEnter }: { onEnter: () => void }) {
         </div>
       </section>
 
-      <footer className="foot">
-        Sepolia testnet · <a href="https://github.com/abaresks24/cloud-credits" target="_blank" rel="noreferrer">GitHub</a>
-        {" · "}Demo asset, not a real security. Cloud contracts restrict transfer — real deployment needs provider consent.
-      </footer>
+      <Footer />
     </>
   );
 }

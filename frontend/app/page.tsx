@@ -6,6 +6,7 @@ import { Landing } from "@/components/Landing";
 import { Market } from "@/components/Market";
 import { Onboard } from "@/components/Onboard";
 import { Desk } from "@/components/Desk";
+import { Footer } from "@/components/Footer";
 
 type Tab = "market" | "sell" | "desk";
 
@@ -49,11 +50,7 @@ export default function Page() {
         </>
       )}
 
-      <footer className="foot">
-        Sepolia testnet · hook <a className="mono" href="https://sepolia.etherscan.io/address/0xB5E5daeE51a2cbd5db6Fc021db0A091cac928888" target="_blank" rel="noreferrer">0xB5E5…8888</a>
-        {" · "}<a href="https://github.com/abaresks24/cloud-credits" target="_blank" rel="noreferrer">GitHub</a>
-        {" · "}Demo asset, not a real security.
-      </footer>
+      <Footer />
     </div>
   );
 }
