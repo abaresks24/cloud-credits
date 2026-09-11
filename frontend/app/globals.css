@@ -1,19 +1,20 @@
 @import url('https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap');
 
 :root {
-  --bg: #FBFBF9;
+  --bg: #FBFAF6;        /* warm paper */
   --panel: #FFFFFF;
-  --soft: #F4F5F3;
-  --line: #E7E8E3;
-  --line-2: #D9DBD4;
-  --ink: #0C1A23;      /* deep navy — text + primary buttons */
-  --text: #16232C;
-  --muted: #63707A;
-  --faint: #98A2A8;
-  --accent: #1F6FEB;   /* restrained blue */
-  --good: #12805C;     /* discount / positive */
-  --warn: #B4741A;
-  --bad: #C0453B;
+  --soft: #F3F2EA;
+  --line: #E7E4D9;
+  --line-2: #D7D3C6;
+  --ink: #1B1C16;       /* warm near-black — text + neutral marks */
+  --text: #262820;
+  --muted: #6E6F62;
+  --faint: #9C9C8E;
+  --accent: #0E6E52;    /* Tenor evergreen — flagship */
+  --accent-deep: #0A5540;
+  --good: #0E6E52;      /* discount / positive */
+  --warn: #96671A;
+  --bad: #B23B2E;
   --r: 18px;
   --font: 'General Sans', ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 }
@@ -183,8 +184,8 @@ input:focus, select:focus { outline: none; border-color: var(--ink); }
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid var(--line-2); background: var(--panel); color: var(--ink); border-radius: 12px; padding: 13px 20px; font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; transition: .15s; }
 .btn:hover { background: var(--soft); }
 .btn:disabled { opacity: .4; cursor: not-allowed; }
-.btn.primary { background: var(--ink); border-color: var(--ink); color: #fff; }
-.btn.primary:hover { background: #1a2d38; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.primary:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
 .btn.block { width: 100%; }
 .btn.lg { padding: 15px 22px; font-size: 16px; }
 .btn.ghost { background: transparent; }

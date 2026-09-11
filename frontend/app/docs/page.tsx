@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { addr } from "@/lib/config";
 import { Footer } from "@/components/Footer";
+import { Logo } from "@/components/Brand";
 
 const short = (a: string) => `${a.slice(0, 6)}…${a.slice(-4)}`;
 const scan = (a: string) => `https://sepolia.etherscan.io/address/${a}`;
@@ -20,13 +21,13 @@ export default function Docs() {
   return (
     <div className="wrap">
       <nav className="nav">
-        <Link href="/" className="brand" style={{ textDecoration: "none" }}><span className="logo">C</span> Cloud Credits</Link>
+        <Link href="/" className="brand" style={{ textDecoration: "none" }}><Logo /> Tenor</Link>
         <Link href="/" className="btn primary">Launch app</Link>
       </nav>
 
       <div style={{ paddingTop: 44 }}>
         <h1 className="doc-title">Documentation</h1>
-        <p className="doc-intro">What Cloud Credits is, how the price works, and how to use it.</p>
+        <p className="doc-intro">What Tenor is, how the price works, and how to use it.</p>
       </div>
 
       <div className="doc-wrap">
@@ -43,9 +44,9 @@ export default function Docs() {
         <article className="doc">
           <h2 id="overview">Overview</h2>
           <p>
-            Cloud Credits is a marketplace for <b>unused cloud spend commitments</b>. Companies pre-pay
+            Tenor is a marketplace for <b>unused cloud spend commitments</b>. Companies pre-pay
             for years of AWS, Google Cloud or Azure to unlock discounts, then leave much of that capacity
-            unused. Cloud Credits lets them resell it to a company that needs it — at a price that reflects
+            unused. Tenor lets them resell it to a company that needs it — at a price that reflects
             how much time is left to consume the credit.
           </p>
           <p>

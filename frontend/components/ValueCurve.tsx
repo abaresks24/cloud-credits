@@ -38,17 +38,17 @@ export function ValueCurve({ faceValue, expiry }: { faceValue: number; expiry: n
       <svg viewBox={`0 0 ${pts.W} ${pts.H}`} width="100%" role="img" aria-label="value over time">
         <defs>
           <linearGradient id="cc" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#1F6FEB" stopOpacity="0.14" />
-            <stop offset="100%" stopColor="#1F6FEB" stopOpacity="0" />
+            <stop offset="0%" stopColor="#0E6E52" stopOpacity="0.14" />
+            <stop offset="100%" stopColor="#0E6E52" stopOpacity="0" />
           </linearGradient>
         </defs>
         <path d={area} fill="url(#cc)" />
-        <path d={path} fill="none" stroke="#1F6FEB" strokeWidth="2.5" />
-        <line x1="0" y1={pts.H - pts.padB} x2={pts.W} y2={pts.H - pts.padB} stroke="#E7E8E3" />
-        <circle cx={nowX} cy={nowY} r="4.5" fill="#1F6FEB" />
-        <text x={nowX + 8} y={nowY - 8} fill="#63707A" fontSize="11" fontFamily="ui-monospace">now</text>
-        <text x={pts.W - 8} y={pts.H - 6} fill="#63707A" fontSize="11" textAnchor="end" fontFamily="ui-monospace">expiry</text>
-        <text x="8" y={pts.H - 6} fill="#63707A" fontSize="11" fontFamily="ui-monospace">
+        <path d={path} fill="none" stroke="#0E6E52" strokeWidth="2.5" />
+        <line x1="0" y1={pts.H - pts.padB} x2={pts.W} y2={pts.H - pts.padB} stroke="#E7E4D9" />
+        <circle cx={nowX} cy={nowY} r="4.5" fill="#0E6E52" />
+        <text x={nowX + 8} y={nowY - 8} fill="#6E6F62" fontSize="11" fontFamily="ui-monospace">now</text>
+        <text x={pts.W - 8} y={pts.H - 6} fill="#6E6F62" fontSize="11" textAnchor="end" fontFamily="ui-monospace">expiry</text>
+        <text x="8" y={pts.H - 6} fill="#6E6F62" fontSize="11" fontFamily="ui-monospace">
           {monthsLeft.toFixed(0)} months left
         </text>
       </svg>

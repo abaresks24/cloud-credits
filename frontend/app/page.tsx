@@ -7,6 +7,7 @@ import { Market } from "@/components/Market";
 import { Onboard } from "@/components/Onboard";
 import { Desk } from "@/components/Desk";
 import { Footer } from "@/components/Footer";
+import { Logo } from "@/components/Brand";
 
 type Tab = "market" | "sell" | "desk";
 
@@ -20,7 +21,7 @@ export default function Page() {
     <div className="wrap">
       <nav className="nav">
         <button className="brand" style={{ border: "none", background: "none", cursor: "pointer" }} onClick={() => setEntered(false)}>
-          <span className="logo">C</span> Cloud Credits
+          <Logo /> Tenor
         </button>
         <div className="tabs">
           <button className={`tab ${tab === "market" ? "active" : ""}`} onClick={() => setTab("market")}>Market</button>

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Footer } from "@/components/Footer";
+import { Logo } from "@/components/Brand";
 
 export function Landing({ onEnter }: { onEnter: () => void }) {
   return (
@@ -14,7 +15,7 @@ export function Landing({ onEnter }: { onEnter: () => void }) {
         <div className="hero-overlay" />
         <div className="hero-inner">
           <nav className="hero-nav">
-            <div className="brand"><span className="logo">C</span> Cloud Credits</div>
+            <div className="brand"><Logo /> Tenor</div>
             <div className="hero-nav-right">
               <Link className="hero-link" href="/docs">Docs</Link>
               <button className="btn on-video" onClick={onEnter}>Launch app</button>
@@ -24,7 +25,7 @@ export function Landing({ onEnter }: { onEnter: () => void }) {
             <h1>Unused cloud commitments, made liquid.</h1>
             <p>
               Companies pre-pay years of AWS, Google Cloud and Azure to unlock discounts — then leave
-              much of it unused. Cloud Credits is where they resell that capacity, priced by the time
+              much of it unused. Tenor is where they resell that capacity, priced by the time
               left to consume the credit.
             </p>
             <div className="hero-cta">
@@ -42,7 +43,7 @@ export function Landing({ onEnter }: { onEnter: () => void }) {
           <h2>A market for capacity that would otherwise expire.</h2>
           <p className="lead">
             A cloud commitment isn't a fixed sum — it's worth less the closer it gets to expiry, because
-            there's less time to consume it, and nothing at all once it lapses. Cloud Credits turns that
+            there's less time to consume it, and nothing at all once it lapses. Tenor turns that
             wasting asset into something a company can sell today, and another can buy at a discount.
           </p>
         </section>
