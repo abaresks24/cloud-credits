@@ -32,7 +32,6 @@ export function Landing({ onEnter }: { onEnter: () => void }) {
               <Link className="btn on-video-ghost lg" href="/docs">Read the docs</Link>
             </div>
           </main>
-          <div className="scroll-hint">Scroll to learn how it works ↓</div>
         </div>
       </div>
 
