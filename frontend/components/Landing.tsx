@@ -1,42 +1,45 @@
 "use client";
 
 import Link from "next/link";
-import { Footer } from "@/components/Footer";
 
 export function Landing({ onEnter }: { onEnter: () => void }) {
   return (
-    <div className="landing-screen">
-      <nav className="nav">
-        <div className="brand"><span className="logo">C</span> Cloud Credits</div>
-        <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-          <Link className="lnav" href="/docs">Docs</Link>
-          <button className="btn primary" onClick={onEnter}>Launch app</button>
-        </div>
-      </nav>
+    <div className="video-hero">
+      <video className="hero-video" autoPlay muted loop playsInline preload="auto">
+        <source src="/hero.mp4" type="video/mp4" />
+      </video>
+      <div className="hero-overlay" />
 
-      <main className="land-main">
-        <div className="land-hero">
-          <div className="kicker">Cloud commitment marketplace</div>
-          <h1>Turn unused cloud commitments into cash.</h1>
+      <div className="hero-inner">
+        <nav className="hero-nav">
+          <div className="brand"><span className="logo">C</span> Cloud Credits</div>
+          <div className="hero-nav-right">
+            <Link className="hero-link" href="/docs">Docs</Link>
+            <button className="btn on-video" onClick={onEnter}>Launch app</button>
+          </div>
+        </nav>
+
+        <main className="hero-copy">
+          <h1>Unused cloud commitments, made liquid.</h1>
           <p>
-            Companies pre-pay years of AWS, Google Cloud and Azure to unlock discounts — then leave much of
-            it unused. Cloud Credits is where they resell that capacity, priced by the time left to consume
-            the credit — enforced by a Uniswap v4 hook.
+            Companies pre-pay years of AWS, Google Cloud and Azure to unlock discounts — then leave
+            much of it unused. Cloud Credits is where they resell that capacity, priced by the time
+            left to consume the credit.
           </p>
-          <div className="home-cta">
-            <button className="btn primary lg" onClick={onEnter}>Launch app</button>
-            <Link className="btn lg" href="/docs">Read the docs</Link>
+          <div className="hero-cta">
+            <button className="btn on-video lg" onClick={onEnter}>Launch app</button>
+            <Link className="btn on-video-ghost lg" href="/docs">Read the docs</Link>
           </div>
+        </main>
 
-          <div className="land-stats">
-            <div><b>~29%</b><span>of cloud spend is wasted (Flexera, 2026)</span></div>
-            <div><b>&lt;50%</b><span>of orgs fully use their commitment discounts</span></div>
-            <div><b>$0</b><span>markets to resell that capacity today</span></div>
+        <footer className="hero-foot">
+          <span>© Cloud Credits</span>
+          <div>
+            <a href="https://github.com/abaresks24/cloud-credits" target="_blank" rel="noreferrer">GitHub</a>
+            <a href="https://x.com/abaresks" target="_blank" rel="noreferrer">Twitter</a>
           </div>
-        </div>
-      </main>
-
-      <Footer />
+        </footer>
+      </div>
     </div>
   );
 }
