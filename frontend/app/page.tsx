@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ConnectButton } from "@/components/ConnectButton";
 import { Landing } from "@/components/Landing";
 import { Market } from "@/components/Market";
@@ -13,12 +13,6 @@ type Tab = "market" | "sell" | "desk";
 export default function Page() {
   const [entered, setEntered] = useState(false);
   const [tab, setTab] = useState<Tab>("market");
-
-  // The landing is a single, non-scrolling screen; the app scrolls normally.
-  useEffect(() => {
-    document.body.style.overflow = entered ? "" : "hidden";
-    return () => { document.body.style.overflow = ""; };
-  }, [entered]);
 
   if (!entered) return <Landing onEnter={() => setEntered(true)} />;
 
