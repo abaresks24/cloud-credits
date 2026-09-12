@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Providers } from "@/components/Providers";
 
 export const metadata: Metadata = {
-  title: "Tenor — secondary market for cloud commitments",
+  title: "Under — secondary market for cloud commitments",
   description:
     "Resell unconsumed cloud spend commitments on a Uniswap v4 pool whose price decays with time to expiry. Sellers verified via ENSv2 + World Selfie Check.",
 };

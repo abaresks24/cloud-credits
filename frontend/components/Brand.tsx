@@ -1,10 +1,11 @@
-/** Tenor mark: a rounded tile with a descending curve — the value declining toward maturity. */
-export function Logo({ size = 26 }: { size?: number }) {
+/** The UNDER wordmark. Black by default; pass `light` to render white (over the video hero). */
+export function Logo({ height = 17, light = false }: { height?: number; light?: boolean }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden style={{ display: "block", flex: "none" }}>
-      <rect width="24" height="24" rx="7" fill="#0E6E52" />
-      <path d="M5 7 C 10 7.5, 11 15, 19 17" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
-      <circle cx="19" cy="17" r="1.7" fill="#fff" />
-    </svg>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="/under.png"
+      alt="Under"
+      style={{ height, width: "auto", display: "block", filter: light ? "invert(1)" : "none" }}
+    />
   );
 }

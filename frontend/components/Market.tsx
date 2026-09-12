@@ -98,14 +98,14 @@ export function Market() {
             <div className="top"><span>You pay</span><span className="mono">Balance {f6(usdc as bigint)}</span></div>
             <div className="mid">
               <input value={usdcIn} onChange={(e) => setUsdcIn(e.target.value)} inputMode="decimal" placeholder="0.0" />
-              <span className="chip-token"><span className="coin" style={{ background: "var(--good)" }}>$</span>USDC</span>
+              <span className="chip-token"><span className="coin" style={{ background: "var(--muted)" }}>$</span>USDC</span>
             </div>
           </div>
           <div className="field">
             <div className="top"><span>You receive (est.)</span><span className="mono">Balance {f6(acme as bigint)}</span></div>
             <div className="mid">
               <span className="est">≈ {est}</span>
-              <span className="chip-token"><span className="coin" style={{ background: "var(--accent)" }}>A</span>ccAWS</span>
+              <span className="chip-token"><span className="coin" style={{ background: "var(--ink)" }}>A</span>ccAWS</span>
             </div>
           </div>
 

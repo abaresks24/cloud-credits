@@ -21,7 +21,7 @@ export default function Page() {
     <div className="wrap">
       <nav className="nav">
         <button className="brand" style={{ border: "none", background: "none", cursor: "pointer" }} onClick={() => setEntered(false)}>
-          <Logo /> Tenor
+          <Logo />
         </button>
         <div className="tabs">
           <button className={`tab ${tab === "market" ? "active" : ""}`} onClick={() => setTab("market")}>Market</button>

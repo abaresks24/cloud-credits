@@ -10,9 +10,9 @@
   --text: #262820;
   --muted: #6E6F62;
   --faint: #9C9C8E;
-  --accent: #0E6E52;    /* Tenor evergreen — flagship */
-  --accent-deep: #0A5540;
-  --good: #0E6E52;      /* discount / positive */
+  --accent: #14150F;    /* monochrome — the DA is driven by the black UNDER wordmark */
+  --accent-deep: #000000;
+  --good: #14150F;      /* positive shown in ink, not colour */
   --warn: #96671A;
   --bad: #B23B2E;
   --r: 18px;
@@ -220,7 +220,8 @@ input:focus, select:focus { outline: none; border-color: var(--ink); }
 .doc li { font-size: 16px; margin: 8px 0; }
 .doc li::marker { color: var(--faint); }
 .doc code { font-family: ui-monospace, monospace; font-size: 14px; background: var(--soft); border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px; }
-.doc a { color: var(--accent); }
+.doc a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2); }
+.doc a:hover { text-decoration-color: var(--ink); }
 .doc .callout { background: var(--soft); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 12px; padding: 16px 18px; margin: 18px 0; font-size: 15px; color: var(--text); }
 .doc-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14.5px; }
 .doc-table th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--faint); font-weight: 600; padding: 9px 12px; border-bottom: 1px solid var(--line-2); }
